@@ -1,19 +1,20 @@
 import * as React from "react";
-import { graphql } from "gatsby";
+import "./index.css";
+import { graphql, Link } from "gatsby";
 
 const IndexPage = ({ data }) => {
-  console.log(data);
-  console.log(
-    JSON.stringify(data.allShopifyProduct.edges.map((el) => el.node.title))
-  );
   return (
     <main>
-      <h1>HomePage</h1>
-      {data.allShopifyProduct.edges.map(({ node }) => (
-        <div>
+      <h3 style={{ textAlign: "center", textTransform: "uppercase" }}>
+        Shopify Store
+      </h3>
+      <h2>Featured Products</h2>
+      {data.allShopifyProduct.edges.map(({ node }, ind) => (
+        <Link to={`/${node.shopifyId}`} className="card" key={ind}>
           <h3>{node.title}</h3>
-          <p>{node.priceRange.minVariantPrice.amount}</p>
-        </div>
+          <h5>{node.description}</h5>
+          <p>Price: {node.priceRange.minVariantPrice.amount}</p>
+        </Link>
       ))}
     </main>
   );
